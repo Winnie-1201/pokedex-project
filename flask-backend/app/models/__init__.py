@@ -66,3 +66,12 @@ class Item(db.Model):
         timezone=True), nullable=False, server_default=func.current_timestamp())
 
     pokemon = db.relationship("Pokemon", back_populates="items")
+
+    def to_dict(self):
+        return {
+            "id": self.id,
+            "happiness": self.happiness,
+            "image_url": self.image_url,
+            "name": self.name,
+            "price": self.price
+        }
