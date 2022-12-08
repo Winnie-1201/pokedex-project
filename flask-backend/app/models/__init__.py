@@ -47,6 +47,23 @@ class Pokemon(db.Model):
 
     items = db.relationship("Item", back_populates="pokemon", cascade="all, delete")
 
+    def to_dict(self):
+        return {
+            'id': self.id,
+            'number': self.number,
+            'attack': self.attack,
+            'defense': self.defense,
+            'imageUrl': self.imageUrl,
+            'name': self.name,
+            'type': self.type,
+            'moves': self.moves,
+            'encounterRate': self.encounterRate,
+            'catchRate': self.catchRate,
+            'captured': self.captured,
+            'created_at': self.created_at,
+            'updated_at': self.updated_at
+        }
+
 
 class Item(db.Model):
     __tablename__ = "items"
@@ -66,3 +83,12 @@ class Item(db.Model):
         timezone=True), nullable=False, server_default=func.current_timestamp())
 
     pokemon = db.relationship("Pokemon", back_populates="items")
+
+    def to_dict(self):
+        return {
+            "id": self.id,
+            "happiness": self.happiness,
+            "image_url": self.image_url,
+            "name": self.name,
+            "price": self.price
+        }

@@ -1,3 +1,6 @@
+import enum
+from sqlalchemy import Enum
+
 types = [
     "fire",
     "electric",
@@ -16,3 +19,8 @@ types = [
     "rock",
     "steel",
 ]
+
+class MyEnum(enum.Enum):
+    types = types
+
+
