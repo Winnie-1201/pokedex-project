@@ -45,7 +45,7 @@ class Pokemon(db.Model):
     updated_at = db.Column(db.DateTime(
         timezone=True), nullable=False, server_default=func.current_timestamp())
 
-    items = db.relationship("Item", back_populates="pokemon")
+    items = db.relationship("Item", back_populates="pokemon", cascade="all, delete")
 
 
 class Item(db.Model):
