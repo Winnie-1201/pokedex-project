@@ -2,6 +2,10 @@ from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.sql import func
 # from .pokemonType import MyEnum
 
+import os
+environment = os.getenv("FLASK_ENV")
+SCHEMA = os.environ.get("SCHEMA")
+
 db = SQLAlchemy()
 
 
@@ -35,7 +39,7 @@ class Pokemon(db.Model):
         precision=3, scale=2), nullable=False, default=1.00)
     catchRate = db.Column(db.Numeric(
         precision=3, scale=2), nullable=False, default=1.00)
-    captured = db.Column(db.Boolean, nullable=False)
+    captured = db.Column(db.Boolean, nullable=False, default=False)
     created_at = db.Column(db.DateTime(
         timezone=True), nullable=False, server_default=func.current_timestamp())
     updated_at = db.Column(db.DateTime(
