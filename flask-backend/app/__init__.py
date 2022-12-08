@@ -8,11 +8,13 @@ from .config import Config
 from flask_migrate import Migrate
 from .seeds import seed_commands
 
+from app.routes.pokemons import pokemons_routes
 
 app = Flask(__name__)
 
 app.cli.add_command(seed_commands)
 app.config.from_object(Config)
+app.register_blueprint(pokemons_routes, url_prefix='/api/pokemon')
 db.init_app(app)
 Migrate(app, db)
 
