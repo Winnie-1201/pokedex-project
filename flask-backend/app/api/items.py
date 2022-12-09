@@ -13,10 +13,10 @@ def add_item(id):
         form['csrf_token'].data = request.cookies['csrf_token']
 
         if form.validate_on_submit():
-            item["name"] = form.data["name"]
-            item["happiness"] = form.data["happiness"]
-            item["image_url"] = form.data["image_url"]
-            item["price"] = form.data["price"]
+            item.name = form.data["name"]
+            item.happiness = form.data["happiness"]
+            item.image_url = form.data["image_url"]
+            item.price = form.data["price"]
 
             return item.to_dict(), 200
         else: 
