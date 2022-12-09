@@ -1,8 +1,8 @@
 """empty message
 
-Revision ID: b2224d9847ad
+Revision ID: cfff0fe556cd
 Revises: 
-Create Date: 2022-12-08 14:12:19.076008
+Create Date: 2022-12-08 15:50:26.366446
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = 'b2224d9847ad'
+revision = 'cfff0fe556cd'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -27,8 +27,8 @@ def upgrade():
     sa.Column('name', sa.String(length=255), nullable=False),
     sa.Column('type', sa.Enum('fire', 'electric', 'normal', 'ghost', 'psychic', 'water', 'bug', 'dragon', 'grass', 'fighting', 'ice', 'flying', 'poison', 'ground', 'rock', 'steel'), nullable=False),
     sa.Column('moves', sa.String(length=255), nullable=False),
-    sa.Column('encounterRate', sa.Numeric(precision=3, scale=2), nullable=False),
-    sa.Column('catchRate', sa.Numeric(precision=3, scale=2), nullable=False),
+    sa.Column('encounterRate', sa.Float(precision=3), nullable=False),
+    sa.Column('catchRate', sa.Float(precision=3), nullable=False),
     sa.Column('captured', sa.Boolean(), nullable=False),
     sa.Column('created_at', sa.DateTime(timezone=True), server_default=sa.text('(CURRENT_TIMESTAMP)'), nullable=False),
     sa.Column('updated_at', sa.DateTime(timezone=True), server_default=sa.text('(CURRENT_TIMESTAMP)'), nullable=False),

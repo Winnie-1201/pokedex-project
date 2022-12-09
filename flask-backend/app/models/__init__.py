@@ -35,10 +35,10 @@ class Pokemon(db.Model):
                              "rock",
                              "steel",), nullable=False)
     moves = db.Column(db.String(255), nullable=False)
-    encounterRate = db.Column(db.Numeric(
-        precision=3, scale=2), nullable=False, default=1.00)
-    catchRate = db.Column(db.Numeric(
-        precision=3, scale=2), nullable=False, default=1.00)
+    encounterRate = db.Column(db.Float(
+        precision=3), nullable=False, default=1.00)
+    catchRate = db.Column(db.Float(
+        precision=3), nullable=False, default=1.00)
     captured = db.Column(db.Boolean, nullable=False, default=False)
     created_at = db.Column(db.DateTime(
         timezone=True), nullable=False, server_default=func.current_timestamp())

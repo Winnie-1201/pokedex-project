@@ -1,7 +1,7 @@
 from flask import Blueprint, request
 
-from app.models import db, Pokemon
-from app.forms import PokemonForm
+from app.models import db, Pokemon, Item
+from app.forms import PokemonForm, ItemForm
 import random
 
 pokemons_routes = Blueprint('pokemons', __name__)
@@ -10,7 +10,7 @@ pokemons_routes = Blueprint('pokemons', __name__)
 @pokemons_routes.route('')
 def get_all_pokemons():
     pokemons = Pokemon.query.all()
-    return [p.to_dict() for p in pokemons]
+    return {"pokemons": [p.to_dict() for p in pokemons]}
 
 
 @pokemons_routes.route('', methods=['POST'])
@@ -120,6 +120,7 @@ def get_random_pokemon():
         print(ls)
     return {"random_pokemons": random.choice(ls)}
 
+
 @pokemons_routes.route('/battle')
 def get_pokemons_battle():
     ls=[]
@@ -132,3 +133,40 @@ def get_pokemons_battle():
     # print(index1,index2)
 
     return [ls[index1],ls[index2]]
+
+
+@pokemons_routes.route('/<int:id>')
+def get_pokemon_by_id(id):
+    # print('****************', "by id")
+    pokemon = Pokemon.query.get(id)
+    return pokemon.to_dict()
+
+
+@pokemons_routes.route('/<int:id>/items')
+def get_pokemon_items(id):
+    # print('****************', "get items")
+    item = db.session.query(Item).filter(Item.pokemon_id == id).first()
+    return item.to_dict()
+
+
+@pokemons_routes.route('/<int:id>/items', methods=['POST'])
+def add_item_to_pokemon(id):
+    # print('****************', "post")
+    form = ItemForm()
+    form['csrf_token'].data = request.cookies['csrf_token']
+
+    if form.validate_on_submit():
+        pokemon = Pokemon.query.get(id)
+        item = Item(happiness=form.data['happiness'], image_url=form.data['image_url'],
+                    name=form.data['name'], price=form.data['price'], pokemon=pokemon)
+        db.session.add(item)
+        db.session.commit()
+
+        return item.to_dict()
+
+    errors = []
+    if form.errors:
+        print(form.errors)
+        for e in form.errors:
+            errors.append(f"{e}: {form.errors[e][0]}")
+    return {'errors': errors}, 401
